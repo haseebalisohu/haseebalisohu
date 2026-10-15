@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#120f1f">
+  <title>Happy Birthday Iffra</title>
+
+  <style>
+    :root {
+      --night: #120f1f;
+      --plum: #29152e;
+      --rose: #ff6683;
+      --gold: #ffd166;
+      --paper: #fff8f0;
+      --ink: #312238;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(255,209,102,.16), transparent 24rem),
+        radial-gradient(circle at 85% 78%, rgba(255,102,131,.18), transparent 28rem),
+        linear-gradient(135deg, var(--night), var(--plum) 58%, #1b1832);
+      color: white;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: radial-gradient(rgba(255,255,255,.55) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 820px);
+      min-height: 100vh;
+      margin: auto;
+      padding: clamp(48px, 10vh, 104px) 22px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font: 700 .78rem/1.2 Arial, sans-serif;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      animation: rise .9s ease both;
+    }
+
+    h1 {
+      max-width: 700px;
+      margin-top: 16px;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      font-weight: 400;
+      line-height: .92;
+      letter-spacing: -.05em;
+      text-wrap: balance;
+      text-shadow: 0 12px 35px rgba(0,0,0,.35);
+      animation: rise 1s .12s ease both;
+    }
+
+    h1 .title-line {
+      display: block;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+    }
+
+    h1 .title-line + .title-line {
+      margin-top: 10px;
+    }
+
+    h1 .subtitle {
+      display: block;
+      margin-top: 18px;
+      color: var(--gold);
+      font-size: .42em;
+      font-style: italic;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 500px;
+      margin-top: 26px;
+      color: rgba(255,255,255,.85);
+      font: 400 1rem/1.7 Arial, sans-serif;
+      animation: rise 1s .24s ease both;
+    }
+
+    button {
+      margin-top: 31px;
+      padding: 15px 25px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--gold);
+      box-shadow: 0 12px 30px rgba(0,0,0,.24);
+      cursor: pointer;
+      font: 700 .92rem Arial, sans-serif;
+      letter-spacing: .02em;
+      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+      animation: rise 1s .36s ease both;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background: #ffe39a;
+      box-shadow: 0 16px 34px rgba(0,0,0,.32);
+      transform: translateY(-3px);
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--rose);
+      outline-offset: 4px;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: .82;
+    }
+
+    .card {
+      width: min(100%, 650px);
+      margin-top: 30px;
+      padding: clamp(25px, 5vw, 43px);
+      border: 1px solid rgba(255,209,102,.3);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(65,30,58,.88), rgba(25,20,45,.84));
+      box-shadow: 0 25px 70px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.12);
+      backdrop-filter: blur(18px);
+      text-align: center;
+      animation: reveal .8s ease both;
+    }
+
+    #typing {
+      min-height: 12rem;
+      color: rgba(255,248,240,.95);
+      font-size: clamp(1.04rem, 2vw, 1.2rem);
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+
+    #typing.typing-cursor::after {
+      content: "|";
+      display: inline-block;
+      margin-left: 4px;
+      color: var(--gold);
+      font-weight: 700;
+      animation: cursorBlink .8s steps(1) infinite;
+    }
+
+    .signature {
+      margin-top: 25px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.18);
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes cursorBlink {
+      0%, 45% { opacity: 1; }
+      46%, 100% { opacity: 0; }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        padding-top: 62px;
+      }
+
+      .intro {
+        font-size: .93rem;
+      }
+
+      .card {
+        margin-top: 24px;
+      }
+
+      #typing {
+        line-height: 1.68;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <p class="eyebrow">A little celebration for</p>
+
+    <h1>
+      <span class="title-line">Happy</span>
+      <span class="title-line">Birthday Iffra</span>
+      <span class="subtitle">From Hadia💋❤️‍🩹</span>
+    </h1>
+
+    <p class="intro">
+      💗 A Little Reminder, Bestie! 🎀
+      <br><br>
+      You're stuck with me forever, okay? No refunds, no exchanges! 😂💋
+      <br><br>
+      Now smile, birthday girl! Because today is ALL ABOUT YOU! 🎂👑💖
+      <br><br>
+      ✨ Click below for a little surprise, Iffra! 🎁💕
+    </p>
+
+    <button id="surpriseButton" type="button">
+      Click here bestie❤️‍🩹 <span aria-hidden="true">&rarr;</span>
+    </button>
+
+    <section id="content" class="hidden" aria-live="polite">
+      <div class="card">
+        <div id="typing"></div>
+
+        <p class="signature">
+          💫 You will always be my favorite part of life! 💫
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+
+  <audio id="music" loop preload="auto">
+    <source src="sooo.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const fullMessage =
+    "💗✨ Happy Birthday to My Favorite Person, Iffra! ✨💗\n\n" +
+
+    "Happiest Birthday to my crime partner, my bestie, my cousin, and my forever person! 🥹🎀💕\n\n" +
+
+    "I don't even know where to start because you're not just my cousin, you're so much more than that. You're my best friend, my partner in crime, my secret keeper, and one of the most special people in my life. 🫶🏻💗\n\n" +
+
+    "From our stupid talks to our endless laughs, from our little fights to making up like nothing ever happened, every moment with you is special to me. 😭💞 Life would honestly be so boring without your craziness! 😂💗\n\n" +
+
+    "I'm so lucky to have someone like you in my life. No matter how much we tease each other, fight over silly things, or annoy each other for absolutely no reason, you'll always have a special place in my heart. 🥹🫂💕\n\n" +
+
+    "On your special day, I wish you endless happiness, lots of love, success, and all the beautiful things your heart desires. May Allah always protect you, keep you smiling, and bless you with everything you've ever wished for. Ameen. 🤍✨\n\n" +
+
+    "And listen, bestie! No matter where life takes us, you'll always be my crime partner. So get ready for more crazy memories, more secrets, more laughter, and obviously more reasons to annoy each other! 😭😂💋\n\n" +
+
+    "Thank you for being YOU, Iffra. Never change that beautiful, crazy personality of yours. Keep smiling, keep shining, and always remember how special you are to me. 💗🎂\n\n" +
+
+    "Once again, HAPPY BIRTHDAY, MY BESTIEEE! 🎀🎉💝\n\n" +
+
+    "Love you loads, meri pagal! 😭🫶🏻💗\n\n" +
+
+    "Forever your partner in crime,\n" +
+
+    "Hadiya ♡ 💌";
+
+    const button = document.getElementById('surpriseButton');
+    const content = document.getElementById('content');
+    const typing = document.getElementById('typing');
+
+    const confettiCanvas = document.getElementById('confetti');
+    const fireworksCanvas = document.getElementById('fireworks');
+
+    const confettiContext = confettiCanvas.getContext('2d');
+    const fireworksContext = fireworksCanvas.getContext('2d');
+
+    const music = document.getElementById('music');
+
+    const colors = ['#ffd166', '#ff6683', '#ffffff', '#c7a6db'];
+
+    let typingIndex = 0;
+    let effectsStarted = false;
+    let fireworks = [];
+
+    function resizeCanvases() {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+      [confettiCanvas, fireworksCanvas].forEach((canvas) => {
+        canvas.width = window.innerWidth * pixelRatio;
+        canvas.height = window.innerHeight * pixelRatio;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+      });
+
+      confettiContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      fireworksContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function typeEffect() {
+      if (typingIndex >= fullMessage.length) {
+        typing.classList.remove('typing-cursor');
+        return;
+      }
+
+      const character = fullMessage[typingIndex];
+
+      if (character === '\n') {
+        typing.appendChild(document.createElement('br'));
+
+        if (fullMessage[typingIndex + 1] === '\n') {
+          typing.appendChild(document.createElement('br'));
+          typingIndex++;
+        }
+      } else {
+        typing.appendChild(document.createTextNode(character));
+      }
+
+      typingIndex++;
+      window.setTimeout(typeEffect, 24);
+    }
+
+    function createConfetti() {
+      return Array.from({ length: 110 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight - window.innerHeight,
+        size: Math.random() * 5 + 2,
+        speed: Math.random() * 2 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        angle: Math.random() * Math.PI
+      }));
+    }
+
+    const confetti = createConfetti();
+
+    function animateConfetti() {
+      confettiContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      confetti.forEach((piece) => {
+        piece.y += piece.speed;
+        piece.angle += .04;
+
+        if (piece.y > window.innerHeight + 10) {
+          piece.y = -10;
+        }
+
+        confettiContext.save();
+        confettiContext.translate(piece.x, piece.y);
+        confettiContext.rotate(piece.angle);
+        confettiContext.fillStyle = piece.color;
+        confettiContext.fillRect(
+          -piece.size / 2,
+          -piece.size / 2,
+          piece.size,
+          piece.size * 1.8
+        );
+        confettiContext.restore();
+      });
+
+      requestAnimationFrame(animateConfetti);
+    }
+
+    function addFirework() {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight * .48 + 30;
+      const color = colors[Math.floor(Math.random() * 3)];
+
+      for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 14) {
+        fireworks.push({
+          x,
+          y,
+          vx: Math.cos(angle) * (Math.random() * 2 + 1),
+          vy: Math.sin(angle) * (Math.random() * 2 + 1),
+          life: 1,
+          color
+        });
+      }
+    }
+
+    function animateFireworks() {
+      fireworksContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      fireworks = fireworks.filter((spark) => spark.life > 0);
+
+      fireworks.forEach((spark) => {
+        spark.x += spark.vx;
+        spark.y += spark.vy;
+        spark.vy += .015;
+        spark.life -= .018;
+
+        fireworksContext.globalAlpha = spark.life;
+        fireworksContext.fillStyle = spark.color;
+        fireworksContext.fillRect(spark.x, spark.y, 2, 2);
+      });
+
+      fireworksContext.globalAlpha = 1;
+      requestAnimationFrame(animateFireworks);
+    }
+
+    function startSurprise() {
+      content.classList.remove('hidden');
+      button.disabled = true;
+      button.textContent = 'For you, always';
+
+      music.volume = .4;
+      music.play().catch(() => {});
+
+      typing.classList.add('typing-cursor');
+
+      if (!effectsStarted) {
+        effectsStarted = true;
+        animateConfetti();
+        animateFireworks();
+        window.setInterval(addFirework, 900);
+      }
+
+      typeEffect();
+    }
+
+    button.addEventListener('click', startSurprise);
+    window.addEventListener('resize', resizeCanvases);
+
+    resizeCanvases();
+  </script>
+
+</body>
+</html>
